@@ -17,7 +17,7 @@ router.get("/login", async (req, res) => {
     const userExists = await user.findOne({ user_id: decodeValue.user_id });
     if (!userExists) {
       newUserData(decodeValue, req, res);
-    } else return res.send("need to updated");
+    } else updateNewUserData(decodeValue, req, res);
   }
 });
 //creating the new user data
@@ -36,6 +36,26 @@ const newUserData = async (decodeValue, req, res) => {
     res.status(200).send({ user: savedUser });
   } catch (error) {
     res.status(400).send({ success: false, msg: error });
+  }
+};
+// updating the auth time
+const updateNewUserData = async (decodeValue, req, res) => {
+  const filter = { user_id: decodeValue.user_id };
+  const option = {
+    upsert: true,
+    new: true,
+  };
+  try {
+    const result = await user.findOneAndUpdate(
+      filter,
+      {
+        auth_time: decodeValue.auth_time,
+      },
+      options
+    );
+    res.status(200).send({ user: result });
+  } catch (err) {
+    res.json({ error: err });
   }
 };
 module.exports = router;

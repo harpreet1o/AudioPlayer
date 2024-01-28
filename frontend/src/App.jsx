@@ -7,6 +7,9 @@ import { app } from "./config/firebase";
 
 import { getAuth } from "firebase/auth";
 
+//to use framer-motion
+import { AnimatePresence } from "framer-motion";
+
 function App() {
   const firebaeAuth = getAuth(app);
   const navigate = useNavigate();
@@ -27,12 +30,15 @@ function App() {
     });
   }, []);
   return (
-    <div className="w-screen h-screen bg-primary flex justify-center items-center">
-      <Routes>
-        <Route path="/login" element={<Login setAuth={setAuth} />} />
-        <Route path="/*" element={<Home />} />
-      </Routes>
-    </div>
+    //animate presence to use framer motion on all divs
+    <AnimatePresence mode="wait">
+      <div className="h-auto min-w-[680px] bg-primary flex justify-center items-center">
+        <Routes>
+          <Route path="/login" element={<Login setAuth={setAuth} />} />
+          <Route path="/*" element={<Home />} />
+        </Routes>
+      </div>
+    </AnimatePresence>
   );
 }
 

@@ -1,5 +1,5 @@
 //creating the user schema
-const mongooose = require("mongoose");
+const mongoose = require("mongoose");
 const UserSchema = mongoose.Schema(
   {
     name: {
@@ -16,11 +16,11 @@ const UserSchema = mongoose.Schema(
     },
     user_id: {
       type: String,
-      require: true,
+      required: true,
     },
     email_verified: {
       type: Boolean,
-      requrired: true,
+      required: true,
     },
     role: {
       type: String,
@@ -31,7 +31,7 @@ const UserSchema = mongoose.Schema(
       required: true,
     },
   },
-  { timeStamps: true }
+  { timestamps: true }
 );
 
-module.exports = mongooose.model("user", UserSchema);
+module.exports = mongoose.model("user", UserSchema);

@@ -6,13 +6,19 @@ import { useEffect, useState } from "react";
 import { app } from "./config/firebase";
 
 import { getAuth } from "firebase/auth";
+import { useStateValue } from "./context/StateProvider";
+import { actionType } from "./context/reducer";
 
 //to use framer-motion
 import { AnimatePresence } from "framer-motion";
+import { validateUser } from "./api";
 
 function App() {
   const firebaeAuth = getAuth(app);
   const navigate = useNavigate();
+  console.log(useStateValue());
+  const [{ user }, dispatch] = useStateValue();
+
   const [auth, setAuth] = useState(
     false || window.localStorage.getItem("auth") === "true"
   );
@@ -21,10 +27,21 @@ function App() {
       if (userCred) {
         userCred.getIdToken().then((token) => {
           console.log(token);
+
+          validateUser(token).then((data) => {
+            dispatch({
+              type: actionType.SET_USER,
+              user: data,
+            });
+          });
         });
       } else {
         setAuth(false);
         window.localStorage.setItem("auth", "false");
+        dispatch({
+          type: actionType.SET_USER,
+          user: null,
+        });
         navigate("/login");
       }
     });

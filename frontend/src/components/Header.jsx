@@ -105,6 +105,15 @@ export default function Header() {
             My favorite
           </p>
           <hr />
+          {/* dashboard only availabe to the admin */}
+          {user?.user?.role === "admin" && (
+            <NavLink to={"/dashBoard"}>
+              <p className="text-base text-textColor hover:font-semibold duration-150 transition-all ease-in-out">
+                Dashboard
+              </p>
+            </NavLink>
+          )}
+          <hr />
           <p
             className="text-base text-textColor hover:font-semibold duration-150 transition-all ease-in-out"
             onClick={() => logout()}

@@ -1,7 +1,7 @@
 import "./App.css";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import { Login } from "./components";
-import { Home } from "./components";
+import { DashBoard, Login, Home } from "./components";
+
 import { useEffect, useState } from "react";
 import { app } from "./config/firebase";
 
@@ -26,8 +26,6 @@ function App() {
     firebaeAuth.onAuthStateChanged((userCred) => {
       if (userCred) {
         userCred.getIdToken().then((token) => {
-          console.log(token);
-
           validateUser(token).then((data) => {
             dispatch({
               type: actionType.SET_USER,
@@ -53,6 +51,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login setAuth={setAuth} />} />
           <Route path="/*" element={<Home />} />
+          <Route path="/dashBoard" element={<DashBoard />} />
         </Routes>
       </div>
     </AnimatePresence>

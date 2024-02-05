@@ -64,7 +64,7 @@ const updateNewUserData = async (decodeValue, req, res) => {
     );
     res.status(200).send({ user: result });
   } catch (err) {
-    res.json({ error: err });
+    return res.status(400).json({ error: err });
   }
 };
 module.exports = router;

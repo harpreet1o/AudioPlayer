@@ -27,6 +27,16 @@ router.get("/login", async (req, res) => {
     } else updateNewUserData(decodeValue, req, res);
   }
 });
+
+router.get("/getAll", async (req, res) => {
+  // find method is going to give everything then sort is used which is going to sort as per the key in ascending order
+  const data = await user.find().sort({ createdAt: 1 });
+  if (data) {
+    return res.status(200).send({ success: true, user: data });
+  } else {
+    return res.status(404).send({ success: false });
+  }
+});
 //creating the new user data
 const newUserData = async (decodeValue, req, res) => {
   const newUser = new user({
@@ -67,4 +77,27 @@ const updateNewUserData = async (decodeValue, req, res) => {
     return res.status(400).json({ error: err });
   }
 };
+router.put("/updateRole/:id", async (req, res) => {
+  const filter = { _id: req.params.id };
+
+  const role = req.body.data.role;
+
+  try {
+    const result = await user.findOneAndUpdate(filter, { role: role });
+    res.status(200).send({ user: result });
+  } catch (error) {
+    res.status(400).send({ success: false, msg: error });
+  }
+});
+router.get("/delete/:id", async (req, res) => {
+  const data = await user.deleteOne({ _id: req.params.id });
+  if (data) {
+    return res
+      .status(200)
+      .send({ success: true, user: data, msg: "the data has been deleted" });
+  } else {
+    return res.status(404).send({ success: false, msg: "data not found" });
+  }
+});
+
 module.exports = router;

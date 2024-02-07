@@ -16,7 +16,7 @@ import { validateUser } from "./api";
 function App() {
   const firebaeAuth = getAuth(app);
   const navigate = useNavigate();
-  console.log(useStateValue());
+  // console.log(useStateValue());
   const [{ user }, dispatch] = useStateValue();
 
   const [auth, setAuth] = useState(
@@ -51,7 +51,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login setAuth={setAuth} />} />
           <Route path="/*" element={<Home />} />
-          <Route path="/dashBoard" element={<DashBoard />} />
+          <Route path="/dashBoard/*" element={<DashBoard />} />
         </Routes>
       </div>
     </AnimatePresence>

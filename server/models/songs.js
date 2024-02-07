@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const songSchema = mongoose.Schema(
   {
     name: {
-      Type: String,
+      type: String,
       required: true,
     },
     artist: {
@@ -16,7 +16,7 @@ const songSchema = mongoose.Schema(
     album: String,
     language: {
       type: String,
-      requried: true,
+      required: true,
     },
     language: {
       type: String,

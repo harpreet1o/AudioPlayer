@@ -6,4 +6,6 @@ export { default as Header } from "./Header";
 export { default as DashBoard } from "./Dashboard";
 export { default as DashBoardHome } from "./DashboardHome";
 export { default as DashBoardSongs } from "./DashboardSongs";
-export { default as DashBoardUseers } from "./DashboardUsers";
+export { default as DashBoardUsers } from "./DashboardUsers";
+export { default as DashBoardArtists } from "./DashboardArtists";
+export { default as DashBoardAlbums } from "./DashboardAlbums";

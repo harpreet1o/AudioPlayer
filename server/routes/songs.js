@@ -6,6 +6,7 @@ router.post("/save", async (req, res) => {
   const newSong = song({
     name: req.body.name,
     artist: req.body.artist,
+    imageURL: req.body.imageURL,
     SongURL: req.body.SongURL,
     album: req.body.album,
     language: req.body.language,
@@ -30,13 +31,10 @@ router.get("/getOne/:id", async (req, res) => {
   }
 });
 router.get("/getAll", async (req, res) => {
-  // find method is going to give everything then sort is used which is going to sort as per the key in ascending order
-  const data = await song.find().sort({ createdAt: 1 });
+  const data = await song.find();
   if (data) {
-    return res.status(200).send({ success: true, song: data });
-  } else {
-    return res.status(404).send({ success: false });
-  }
+    return res.status(200).json({ song: data, success: "true" });
+  } else return res.json({ success: "false" });
 });
 router.get("/delete/:id", async (req, res) => {
   const data = await song.deleteOne({ _id: req.params.id });

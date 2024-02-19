@@ -9,7 +9,9 @@ import {
   DashBoardSongs,
   DashBoardUsers,
   DashBoardArtists,
+  DashBoardNewSong,
 } from ".";
+
 //this function is used if the user is admin else won't open
 function Dashboard() {
   return (
@@ -45,7 +47,7 @@ function Dashboard() {
           <Route path="/albums" element={<DashBoardAlbums />}></Route>
           <Route path="/artists" element={<DashBoardArtists />}></Route>
           <Route path="/users" element={<DashBoardUsers />}></Route>
-          <Route path="/newSongs" element={<DashBoardHome />}></Route>
+          <Route path="/newSong" element={<DashBoardNewSong />}></Route>
         </Routes>
       </div>
     </div>

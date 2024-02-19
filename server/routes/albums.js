@@ -1,15 +1,14 @@
 const express = require("express");
 const router = express.Router();
-const albums = require("../models/album");
 const album = require("../models/album");
 
 router.post("/save", async (req, res) => {
-  const newAlbum = artist({
+  const newAlbum = album({
     name: req.body.name,
     imageURL: req.body.imageURL,
   });
   try {
-    const savedArtist = await newAlbum.save();
+    const savedAlbum = await newAlbum.save();
     return res.status(200).send({ success: true, album: savedAlbum });
   } catch (error) {
     return res.status(400).send({ success: false, msg: error });

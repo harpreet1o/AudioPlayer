@@ -27,10 +27,6 @@ const songSchema = mongoose.Schema(
       required: true,
     },
 
-    instagram: {
-      type: String,
-      required: true,
-    },
     category: {
       type: String,
       required: true,

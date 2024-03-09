@@ -3,6 +3,7 @@ const router = express.Router();
 const song = require("../models/songs");
 
 router.post("/save", async (req, res) => {
+  console.log("hi");
   const newSong = song({
     name: req.body.name,
     artist: req.body.artist,
@@ -10,7 +11,6 @@ router.post("/save", async (req, res) => {
     SongURL: req.body.SongURL,
     album: req.body.album,
     language: req.body.language,
-    instagram: req.body.instagram,
     category: req.body.category,
   });
   try {

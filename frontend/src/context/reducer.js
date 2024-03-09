@@ -4,6 +4,10 @@ export const actionType = {
   SET_ALL_Albums: "SET_ALL_Albums",
   SET_ALL_Songs: "SET_ALL_Songs",
   SET_ALL_Artists: "SET_ALL_Artists",
+  SET_FIlTER_TERM: "SET_FIlTER_TERM",
+  SET_ARTIST_FILTER: "SET_ARTIST_FILTER",
+  SET_LANGUAGE_FILTER: "SET_LANGUAGE_FILTER",
+  SET_ALBUM_FILTER: "SET_ALBUM_FILTER",
 };
 // there is a little case issue so be careful the user and all user are all uppercase but the other are diffrent
 //reducer function
@@ -34,7 +38,27 @@ const reducer = (state, action) => {
         ...state,
         allSongs: action.allSongs,
       };
-
+    //filter cases
+    case actionType.SET_FIlTER_TERM:
+      return {
+        ...state,
+        filterTerm: action.filterTerm,
+      };
+    case actionType.SET_LANGUAGE_FILTER:
+      return {
+        ...state,
+        languageFilter: action.languageFilter,
+      };
+    case actionType.SET_ALBUM_FILTER:
+      return {
+        ...state,
+        albumFilter: action.albumFilter,
+      };
+    case actionType.SET_ARTIST_FILTER:
+      return {
+        ...state,
+        artistFilter: action.artistFilter,
+      };
     default:
       return state;
   }

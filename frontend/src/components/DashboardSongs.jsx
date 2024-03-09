@@ -25,7 +25,7 @@ function DashboardSongs() {
     <div className="w-full p-4 flex items-center justify-center flex-col">
       <div className="w-full flex justify-center items-center gap-20">
         <NavLink
-          to={"/dashBoard/newSongs"}
+          to={"/dashBoard/newSong"}
           className="flex items-center justify-center px-4 py-3 border rounded-md border-gray-300 hover:shadow-md cursor-pointer"
         >
           <IoAdd />
@@ -93,16 +93,16 @@ export const SongCard = ({ song, i }) => {
           {" "}
           {song.artist.length > 25
             ? `${song.artist.slice(0, 25)}...`
-            : song.aritist}
+            : song.artist}
         </span>
       </p>
 
-      <div className="w-full absolute bottom-2 right-2 flex items-center justify-between ox-4 ">
+      <div className="w-full absolute bottom-2  flex items-center justify-between ox-4 ">
         <motion.i
           whileTap={{ scale: 0.75 }}
           className="text-base text-red-400 drop-shadow-md hover:text-red-600"
         >
-          <ioTrash />
+          <IoTrash />
         </motion.i>
       </div>
     </motion.div>

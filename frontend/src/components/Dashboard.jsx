@@ -10,10 +10,13 @@ import {
   DashBoardUsers,
   DashBoardArtists,
   DashBoardNewSong,
+  Alert,
 } from ".";
+import { useStateValue } from "../context/StateProvider";
 
 //this function is used if the user is admin else won't open
 function Dashboard() {
+  const [{ alertType }, dispatch] = useStateValue();
   return (
     <div className="w-full h-auto flex flex-col items-center justify-center bg-primary">
       <Header />
@@ -50,6 +53,7 @@ function Dashboard() {
           <Route path="/newSong" element={<DashBoardNewSong />}></Route>
         </Routes>
       </div>
+      {alertType && <Alert type={alertType} />}
     </div>
   );
 }

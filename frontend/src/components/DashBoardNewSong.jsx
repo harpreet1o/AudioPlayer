@@ -14,7 +14,14 @@ import { MdDelete } from "react-icons/md";
 import { storage } from "../config/firebase";
 import { useStateValue } from "../context/StateProvider";
 
-import { getAllAlbums, getAllArtists, getAllSongs, saveNewSong } from "../api";
+import {
+  getAllAlbums,
+  getAllArtists,
+  getAllSongs,
+  saveNewSong,
+  saveNewArtist,
+  saveNewAlbum,
+} from "../api";
 import { actionType } from "../context/reducer";
 import { FilterButtons } from ".";
 import { filterByLanguage, filters } from "../utils/supportfunction";
@@ -30,6 +37,7 @@ function DashBoardNewSong() {
       albumFilter,
       filterTerm,
       languageFilter,
+      alertType,
     },
     dispatch,
   ] = useStateValue();
@@ -72,22 +80,60 @@ function DashBoardNewSong() {
       });
     }
   }, []);
+
   const deleteFileObject = (url, isImage) => {
+    console.log("hi");
     if (isImage) {
       setImageLoading(true);
       setIsAudioLoading(true);
+      setIsAlbumUploading(true);
+      setIsArtistUploading(true);
+      dispatch({
+        type: actionType.SET_ALERT,
+        alertType: "success",
+      });
+      setTimeout(() => {
+        dispatch({
+          type: actionType.SET_ALERT,
+          alertType: null,
+        });
+      }, 4000);
     }
+
     const deleteRef = ref(storage, url);
+
     deleteObject(deleteRef).then(() => {
-      setSongImageCover(null);
-      setAudioImageCover(null);
+      dispatch({
+        type: actionType.SET_ALERT,
+        alertType: "danger",
+      });
+      setTimeout(() => {
+        dispatch({
+          type: actionType.SET_ALERT,
+          alertType: null,
+        });
+      }, 4000);
+      isImage ? setSongImageCover(null) : setAudioImageCover(null);
+      setAlbumImageCover(null);
+      setArtistImageCover(null);
+      setIsAlbumUploading(false);
+      setIsArtistUploading(false);
       setImageLoading(false);
       setIsAudioLoading(false);
     });
   };
   const saveSong = () => {
     if (!songImageCover || !audioImageCover) {
-      return null;
+      dispatch({
+        type: actionType.SET_ALERT,
+        alertType: "danger",
+      });
+      setTimeout(() => {
+        dispatch({
+          type: actionType.SET_ALERT,
+          alertType: null,
+        });
+      }, 4000);
     } else {
       setIsAudioLoading(true);
       setImageLoading(true);
@@ -100,23 +146,120 @@ function DashBoardNewSong() {
         language: languageFilter,
         category: filterTerm,
       };
+      console.log(data);
       saveNewSong(data).then((res) => {
         getAllSongs().then((songs) => {
           dispatch({
             type: actionType.SET_ALL_Songs,
-            allSongs: songs.songs,
+            allSongs: songs,
           });
         });
       });
+      dispatch({
+        type: actionType.SET_ALERT,
+        alertType: "success",
+      });
+      setTimeout(() => {
+        dispatch({
+          type: actionType.SET_ALERT,
+          alertType: null,
+        });
+      }, 4000);
       setSongName(null);
       setIsAudioLoading(false);
       setImageLoading(false);
+
       setSongImageCover(null);
       setAudioImageCover(null);
       dispatch({ type: actionType.SET_ARTIST_FILTER, artistFilter: null });
       dispatch({ type: actionType.SET_LANGUAGE_FILTER, languageFilter: null });
       dispatch({ type: actionType.SET_ALBUM_FILTER, albumFilter: null });
-      dispatch({ type: actionType.SET_FILTER_TERM, filterTerm: null });
+      dispatch({ type: actionType.SET_FILTER_TERM, filterTerm: "all" });
+    }
+  };
+  const saveArtist = () => {
+    if (!artistImageCover || !artistName || !twitter || !instagram) {
+      dispatch({
+        type: actionType.SET_ALERT,
+        alertType: "danger",
+      });
+      setTimeout(() => {
+        dispatch({
+          type: actionType.SET_ALERT,
+          alertType: null,
+        });
+      }, 4000);
+    } else {
+      setIsArtistUploading(true);
+      const data = {
+        name: artistName,
+        imageURL: artistImageCover,
+        twitter: `www.twitter.com/${twitter}`,
+        instagram: `www.intagram.com/${instagram}`,
+      };
+      saveNewArtist(data).then((res) => {
+        getAllArtists().then((artists) => {
+          dispatch({
+            type: actionType.SET_ALL_Artists,
+            allArtists: artists.artist,
+          });
+        });
+      });
+
+      dispatch({
+        type: actionType.SET_ALERT,
+        alertType: "success",
+      });
+      setTimeout(() => {
+        dispatch({
+          type: actionType.SET_ALERT,
+          alertType: null,
+        });
+      }, 4000);
+      setIsArtistUploading(false);
+      setArtistImageCover(null);
+      setTwitter("");
+      setInstagram("");
+    }
+  };
+  const saveAlbum = () => {
+    if (!albumImageCover || !albumName) {
+      dispatch({
+        type: actionType.SET_ALERT,
+        alertType: "danger",
+      });
+      setTimeout(() => {
+        dispatch({
+          type: actionType.SET_ALERT,
+          alertType: null,
+        });
+      }, 4000);
+    } else {
+      const data = {
+        name: albumName,
+        imageURL: albumImageCover,
+      };
+      saveNewAlbum(data).then((res) => {
+        getAllAlbums().then((album) => {
+          dispatch({
+            type: actionType.SET_ALL_Albums,
+            allAlbums: album.album,
+          });
+        });
+      });
+      dispatch({
+        type: actionType.SET_ALERT,
+        alertType: "success",
+      });
+      setTimeout(() => {
+        dispatch({
+          type: actionType.SET_ALERT,
+          alertType: null,
+        });
+      }, 4000);
+      setIsAlbumUploading(false);
+      setAlbumImageCover(null);
+      setAlbumName("");
     }
   };
 
@@ -219,9 +362,9 @@ function DashBoardNewSong() {
           {artistUploading && (
             <ImageLoader progress={artistUploadingProgress} />
           )}
-          {!artistImageCover && (
+          {!artistUploading && (
             <>
-              {!songImageCover ? (
+              {!artistImageCover ? (
                 <FileUploader
                   updateState={setArtistImageCover}
                   setProgress={setArtistUploadingProgress}
@@ -249,23 +392,103 @@ function DashBoardNewSong() {
             </>
           )}
         </div>
+
+        {/* /artist name */}
+        <input
+          type="text"
+          placeholder="Artist name.."
+          className="w-full p-3 rounded-md text-base font-semibold text-textColor outline-none shadow-sm borddr border-gay-300 transparent"
+          onChange={(e) => setArtistName(e.target.value)}
+          value={artistName}
+        />
+        {/* twitter45`19 */}
+        <input
+          type="text"
+          placeholder="Twitter"
+          className="w-full p-3 rounded-md text-base font-semibold text-textColor outline-none shadow-sm borddr border-gay-300 transparent"
+          onChange={(e) => setTwitter(e.target.value)}
+          value={twitter}
+        />
+        <input
+          type="text"
+          placeholder="Instagram"
+          className="w-full p-3 rounded-md text-base font-semibold text-textColor outline-none shadow-sm borddr border-gay-300 transparent"
+          onChange={(e) => setInstagram(e.target.value)}
+          value={instagram}
+        />
+        <div className="flex items-center justify-center w-60 cursor-pointer p-4">
+          {artistUploading ? (
+            <Button />
+          ) : (
+            <motion.button
+              onClick={saveArtist}
+              whileTap={{ scale: 0.75 }}
+              className="py-2 rounded-md px-8 text-white bg-red-600 hover:shadow-lg"
+            >
+              <p>Save Artist</p>
+            </motion.button>
+          )}
+        </div>
+        {/* Image uploader for album */}
+        <h1 className="text-xl font-semibold text-headingColor">
+          Album's Details
+        </h1>
+        <div className="bg-card backdrop-blur-md w-full h-300 rounded-md border-2 border-dotted border-gray-300  cursor-pointer">
+          {albumUploading && <ImageLoader progress={albumUploadingProgress} />}
+          {!albumUploading && (
+            <>
+              {!albumImageCover ? (
+                <FileUploader
+                  updateState={setAlbumImageCover}
+                  setProgress={setAlbumUploadingProgress}
+                  isLoading={setIsAlbumUploading}
+                  isImage={true}
+                />
+              ) : (
+                <div className="relative w-full h-full overflow-hidden rounded-md">
+                  <img
+                    src={albumImageCover}
+                    className="w-full h-full object-cover"
+                    alt=""
+                  />
+                  <button
+                    type="button"
+                    className="absolute bottom-3 right-3 p-3 rounded-full bg-red-500 text-xl cursor-pointer outline-none border-none hover:shadow-md duration-200 transition-all ease-in-out"
+                    onClick={() => {
+                      deleteFileObject(albumImageCover, true);
+                    }}
+                  >
+                    <MdDelete className="text-white" />
+                  </button>
+                </div>
+              )}
+            </>
+          )}
+        </div>
+
+        {/* /artist name */}
+        <input
+          type="text"
+          placeholder="Album name.."
+          className="w-full p-3 rounded-md text-base font-semibold text-textColor outline-none shadow-sm borddr border-gay-300 transparent"
+          onChange={(e) => setAlbumName(e.target.value)}
+          value={albumName}
+        />
+
+        <div className="flex items-center justify-center w-60 cursor-pointer p-4">
+          {albumUploading ? (
+            <Button />
+          ) : (
+            <motion.button
+              onClick={saveAlbum}
+              whileTap={{ scale: 0.75 }}
+              className="py-2 rounded-md px-8 text-white bg-red-600 hover:shadow-lg"
+            >
+              <p>Save Album</p>
+            </motion.button>
+          )}
+        </div>
       </div>
-      {/* /artist name */}
-      <input
-        type="text"
-        placeholder="Artist name.."
-        className="w-full p-3 rounded-md text-base font-semibold text-textColor outline-none shadow-sm borddr border-gay-300 transparent"
-        onChange={(e) => setSongName(e.target.value)}
-        value={artistName}
-      />
-      {/* twitter45`19 */}
-      <input
-        type="text"
-        placeholder="Twitter"
-        className="w-full p-3 rounded-md text-base font-semibold text-textColor outline-none shadow-sm borddr border-gay-300 transparent"
-        onChange={(e) => setSongName(e.target.value)}
-        value={twitter}
-      />
     </div>
   );
 }
@@ -369,6 +592,19 @@ export const FileUploader = function ({
   isLoading,
   isImage,
 }) {
+  const [
+    {
+      allSongs,
+      allArtists,
+      allAlbums,
+      artistFilter,
+      albumFilter,
+      filterTerm,
+      languageFilter,
+      alertType,
+    },
+    dispatch,
+  ] = useStateValue();
   const uploadFile = (e) => {
     isLoading(true);
     const uploadedFile = e.target.files[0];
@@ -384,12 +620,32 @@ export const FileUploader = function ({
       },
       (error) => {
         console.log(error);
+        dispatch({
+          type: actionType.SET_ALERT,
+          alertType: "danger",
+        });
+        setTimeout(() => {
+          dispatch({
+            type: actionType.SET_ALERT,
+            alertType: null,
+          });
+        }, 4000);
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           updateState(downloadURL);
           isLoading(false);
         });
+        dispatch({
+          type: actionType.SET_ALERT,
+          alertType: "success",
+        });
+        setTimeout(() => {
+          dispatch({
+            type: actionType.SET_ALERT,
+            alertType: null,
+          });
+        }, 4000);
       }
     );
   };

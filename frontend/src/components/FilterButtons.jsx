@@ -22,7 +22,7 @@ function FilterButtons({ filterData, flag }) {
       dispatch({ type: actionType.SET_LANGUAGE_FILTER, languageFilter: name });
     }
     if (flag === "Category") {
-      dispatch({ type: actionType.SET_FIlTER_TERM, filterTerm: name });
+      dispatch({ type: actionType.SET_FILTER_TERM, filterTerm: name });
     }
   };
   return (

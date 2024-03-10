@@ -4,14 +4,16 @@ export const actionType = {
   SET_ALL_Albums: "SET_ALL_Albums",
   SET_ALL_Songs: "SET_ALL_Songs",
   SET_ALL_Artists: "SET_ALL_Artists",
-  SET_FIlTER_TERM: "SET_FIlTER_TERM",
+  SET_FILTER_TERM: "SET_FIlTER_TERM",
   SET_ARTIST_FILTER: "SET_ARTIST_FILTER",
   SET_LANGUAGE_FILTER: "SET_LANGUAGE_FILTER",
   SET_ALBUM_FILTER: "SET_ALBUM_FILTER",
+  SET_ALERT: "SET_ALERT",
 };
 // there is a little case issue so be careful the user and all user are all uppercase but the other are diffrent
 //reducer function
 const reducer = (state, action) => {
+  console.log(action);
   switch (action.type) {
     case actionType.SET_USER:
       return {
@@ -39,7 +41,7 @@ const reducer = (state, action) => {
         allSongs: action.allSongs,
       };
     //filter cases
-    case actionType.SET_FIlTER_TERM:
+    case actionType.SET_FILTER_TERM:
       return {
         ...state,
         filterTerm: action.filterTerm,
@@ -59,6 +61,12 @@ const reducer = (state, action) => {
         ...state,
         artistFilter: action.artistFilter,
       };
+    case actionType.SET_ALERT:
+      return {
+        ...state,
+        alertType: action.alertType,
+      };
+
     default:
       return state;
   }

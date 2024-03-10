@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { IoAdd, IoPause, IoPlay, IoTrash } from "react-icons/io5";
 import { AiOutlineClear } from "react-icons/ai";
-import { getAllSongs } from "../api";
+import { deleteSong, getAllSongs } from "../api";
 import { useStateValue } from "../context/StateProvider";
 import { actionType } from "../context/reducer";
 import { motion } from "framer-motion";
+import { ref, deleteObject } from "firebase/storage";
+import { storage } from "../config/firebase";
 
 function DashboardSongs() {
   const [songFilter, setSongFilter] = useState("");
@@ -74,6 +76,32 @@ export const SongContainer = ({ data }) => {
   );
 };
 export const SongCard = ({ song, i }) => {
+  console.log(song);
+  const [{ AlertType, allSongs }, dispatch] = useStateValue();
+  const deleteS = () => {
+    const deleteImageRef = ref(storage, song.imageURL);
+    deleteObject(deleteImageRef).then(() => console.log("deleted image"));
+    const deleteAudioRef = ref(storage, song.SongURL);
+    deleteObject(deleteAudioRef).then(() => console.log("deleted Audio"));
+
+    deleteSong(song._id).then((res) => {
+      if (res.data) {
+        dispatch({
+          type: actionType.SET_ALERT,
+          AlertType: "success",
+        });
+        setTimeout(() => {
+          dispatch({
+            type: actionType.SET_ALERT,
+            AlertType: null,
+          });
+        }, 3000);
+        getAllSongs().then((data) =>
+          dispatch({ type: actionType.SET_ALL_Songs, allSongs: data })
+        );
+      }
+    });
+  };
   console.log(song.imageURL);
   return (
     <motion.div
@@ -102,7 +130,11 @@ export const SongCard = ({ song, i }) => {
           whileTap={{ scale: 0.75 }}
           className="text-base text-red-400 drop-shadow-md hover:text-red-600"
         >
-          <IoTrash />
+          <IoTrash
+            onClick={() => {
+              deleteS();
+            }}
+          />
         </motion.i>
       </div>
     </motion.div>

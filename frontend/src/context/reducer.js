@@ -9,6 +9,10 @@ export const actionType = {
   SET_LANGUAGE_FILTER: "SET_LANGUAGE_FILTER",
   SET_ALBUM_FILTER: "SET_ALBUM_FILTER",
   SET_ALERT: "SET_ALERT",
+  SET_SONGPLAYING: "SET_SONGPLAYING",
+  SET_SONGINDEX: "SET_SONGINDEX",
+  SET_MINI_PLAYER: "SET_MINI_PLAYER",
+  SET_SEARCH_TERM: "SET_SEARCH_TERM",
 };
 // there is a little case issue so be careful the user and all user are all uppercase but the other are diffrent
 //reducer function
@@ -65,6 +69,27 @@ const reducer = (state, action) => {
       return {
         ...state,
         alertType: action.alertType,
+      };
+    case actionType.SET_SONGINDEX:
+      return {
+        ...state,
+        songIndex: action.songIndex,
+      };
+    case actionType.SET_SONGPLAYING:
+      return {
+        ...state,
+        isSongPlaying: action.isSongPlaying,
+      };
+    case actionType.SET_MINI_PLAYER:
+      return {
+        ...state,
+        MiniPlayer: action.MiniPlayer,
+      };
+
+    case actionType.SET_SEARCH_TERM:
+      return {
+        ...state,
+        searchTerm: action.searchTerm,
       };
 
     default:

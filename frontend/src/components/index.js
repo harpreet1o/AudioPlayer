@@ -12,3 +12,4 @@ export { default as DashBoardArtists } from "./DashboardArtists";
 export { default as DashBoardAlbums } from "./DashboardAlbums";
 export { default as FilterButtons } from "./FilterButtons";
 export { default as Alert } from "./Alert";
+export { default as MusicPlayer } from "./MusicPlayer";

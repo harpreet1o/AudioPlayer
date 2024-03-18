@@ -71,13 +71,13 @@ function DashboardSongs() {
 export const SongContainer = ({ data }) => {
   return (
     <div className="w-full flex flex-wrap gap-3 items-center justify-evenly">
-      {data && data.map((song, i) => <SongCard song={song} key={i} />)}
+      {data && data.map((song, i) => <SongCard song={song} key={i} i={i} />)}
     </div>
   );
 };
 export const SongCard = ({ song, i }) => {
-  console.log(song);
-  const [{ AlertType, allSongs }, dispatch] = useStateValue();
+  const [{ AlertType, allSongs, songIndex, isSongPlaying }, dispatch] =
+    useStateValue();
   const deleteS = () => {
     const deleteImageRef = ref(storage, song.imageURL);
     deleteObject(deleteImageRef).then(() => console.log("deleted image"));
@@ -102,11 +102,26 @@ export const SongCard = ({ song, i }) => {
       }
     });
   };
-  console.log(song.imageURL);
+  const addToContext = () => {
+    console.log(i);
+    if (!isSongPlaying) {
+      dispatch({
+        type: actionType.SET_SONGPLAYING,
+        isSongPlaying: true,
+      });
+    }
+    if (songIndex !== i) {
+      dispatch({
+        type: actionType.SET_SONGINDEX,
+        songIndex: i,
+      });
+    }
+  };
   return (
     <motion.div
-      className="relative w-14 min-w-210 px-2 py-4 cursor-pointer hover:bg-card
+      className="relative w-40 min-w-210 px-2 py-4 cursor-pointer hover:bg-card
    bg-gray-100 shadow-md rounded-lg flex flex-col items-center"
+      onClick={addToContext}
     >
       <div className="w-40 min-w-[160px] h-40 min-h-[160px] rounded-lg drop-shadow-lg relative overflow-hidden">
         <motion.img

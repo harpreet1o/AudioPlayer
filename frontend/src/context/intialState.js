@@ -10,5 +10,7 @@ export const initialState = {
   albumFilter: null,
   alertType: null,
   isSongPlaying: false,
+  MiniPlayer: false,
   songIndex: 0,
+  searchTerm: "",
 };

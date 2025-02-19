@@ -39,7 +39,7 @@ export default function Header() {
             Home
           </NavLink>
         </li>
-        <li className="mx-5 text-lg">
+        {/* <li className="mx-5 text-lg">
           <NavLink
             to={"/songs"}
             className={({ isActive }) => {
@@ -48,8 +48,8 @@ export default function Header() {
           >
             songs
           </NavLink>
-        </li>
-        <li className="mx-5 text-lg">
+        </li> */}
+        {/* <li className="mx-5 text-lg">
           <NavLink
             to={"/premium"}
             className={({ isActive }) => {
@@ -68,7 +68,7 @@ export default function Header() {
           >
             Contact Us
           </NavLink>
-        </li>
+        </li> */}
       </ul>
       <div
         className="flex items-center ml-auto cursor-pointer gap-2 relative"

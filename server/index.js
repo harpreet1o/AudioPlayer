@@ -3,7 +3,7 @@ const app = express();
 const cors = require("cors");
 const port = 4000;
 const mongoose = require("mongoose");
-import dotenv from "dotenv";
+const dotenv = require("dotenv");
 
 dotenv.config();
 // use to protect against cors policy

@@ -1,10 +1,60 @@
-Working-
-This is a music playing app starts with the login page where authentication is done by google authenticaion. [signup page](signinpage.png)Once its done the user is entered into the app. Here he can filter out the songs and listen to his favorite songs. [mainPage](mainPage.png)The songs are added to the library to the dashboard [adding new songs](addsongs.png). There you could create new artists and new albums and add new songs. For playing of songs external library is used audioplayer5 is used.
+# AudioPlayer
 
-Tech stacks
+External library `audioplayer5` is used.
 
-1. Using React with tailwind for the css
-2. Created firebase account for storage of sons
-3. Used the node js express js for the links api
-4. Mongodb is used for the storing of the data
-5. Using framer-motion for the css animation
+## Tech stacks
+
+1. Using React with Tailwind for the CSS
+2. Created Firebase account for storage of songs
+3. Used Node.js and Express.js for the links API
+4. MongoDB is used for storing the data
+5. Using Framer Motion for CSS animation
+
+## Process to run
+
+### Prerequisites
+
+- Node.js installed
+- MongoDB instance running
+- Firebase account and service account key
+
+### Steps
+
+1. **Clone the repository:**
+
+    ```sh
+    git clone https://github.com/yourusername/AudioPlayer.git
+    cd AudioPlayer
+    ```
+
+2. **Install dependencies:**
+
+    ```sh
+    npm install
+    ```
+
+3. **Set up the environment variables:**
+
+    - Create a `.env` file in the root directory of the project.
+    - Add the following environment variables to the `.env` file:
+
+    ```env
+    MONGODB_PASSWORD=your_mongodb_password
+    SERVICE_ACCOUNT_KEY={"type": "service_account", "project_id": "your_project_id", "private_key_id": "your_private_key_id", "private_key": "-----BEGIN PRIVATE KEY-----\nYOUR_PRIVATE_KEY\n-----END PRIVATE KEY-----\n", "client_email": "your_client_email", "client_id": "your_client_id", "auth_uri": "https://accounts.google.com/o/oauth2/auth", "token_uri": "https://oauth2.googleapis.com/token", "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs", "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/your_client_email"}
+    ```
+
+4. **Run the server:**
+
+    ```sh
+    cd server
+    npm run dev
+    ```
+
+5. **Run the React application:**
+
+    ```sh
+    cd client
+    npm run dev
+    ```
+
+Now, your application should be running with the necessary environment variables set up.

@@ -3,14 +3,16 @@ const app = express();
 const cors = require("cors");
 const port = 4000;
 const mongoose = require("mongoose");
+import dotenv from "dotenv";
 
+dotenv.config();
 // use to protect against cors policy
 app.use(cors({ orgin: true }));
 app.use(express.json());
 //connected database
 mongoose
   .connect(
-    `mongodb+srv://harpreetsinghthechamp:Hmusic@cluster0.qajvqm2.mongodb.net/`
+    `mongodb+srv://harpreetsinghthechamp:${process.env.MONGODB_PASSWORD}@cluster0.qajvqm2.mongodb.net/`
   )
   .then(() => console.log("connected"));
 

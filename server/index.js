@@ -7,7 +7,7 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 // use to protect against cors policy
-app.use(cors({ orgin: true }));
+app.use(cors({ origin: true }));
 app.use(express.json());
 //connected database
 mongoose

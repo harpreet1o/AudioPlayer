@@ -2,6 +2,19 @@
 
 External library `audioplayer5` is used.
 
+## Demo
+
+### Live Link
+[website](https://github.com/harpreet1o/AudioPlayer.git)
+
+### Overview
+
+The app comes with a few songs, and to make changes, you need admin access. For testing, every user is automatically an admin. To add music, go to the user profile and click on the dashboard; you can add songs here.
+
+[mainPage](./mainPage.png)
+
+[addingSong.png](./addingSong.png)
+
 ## Tech stacks
 
 1. Using React with Tailwind for the CSS
@@ -9,6 +22,9 @@ External library `audioplayer5` is used.
 3. Used Node.js and Express.js for the links API
 4. MongoDB is used for storing the data
 5. Using Framer Motion for CSS animation
+
+## Deployment
+The app is currenlty hosted on Heroku server
 
 ## Process to run
 
@@ -23,7 +39,7 @@ External library `audioplayer5` is used.
 1. **Clone the repository:**
 
     ```sh
-    git clone https://github.com/yourusername/AudioPlayer.git
+    git clone https://github.com/harpreet1o/AudioPlayer.git
     cd AudioPlayer
     ```
 

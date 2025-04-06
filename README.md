@@ -11,9 +11,10 @@ External library `audioplayer5` is used.
 
 The app comes with a few songs, and to make changes, you need admin access. For testing, every user is automatically an admin. To add music, go to the user profile and click on the dashboard; you can add songs here.
 
-[mainPage](./mainPage.png)
+![mainPage](./mainPage.png)
 
-[addingSong.png](./addingSong.png)
+![addingSong](./addingSong.png)
+
 
 ## Tech stacks
 

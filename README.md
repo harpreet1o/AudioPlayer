@@ -6,6 +6,7 @@ External library `audioplayer5` is used.
 
 ### Live Link
 [website](https://github.com/harpreet1o/AudioPlayer.git)
+The App is currently hosted on Heroku
 
 ### Overview
 
@@ -24,8 +25,6 @@ The app comes with a few songs, and to make changes, you need admin access. For 
 4. MongoDB is used for storing the data
 5. Using Framer Motion for CSS animation
 
-## Deployment
-The app is currenlty hosted on Heroku server
 
 ## Process to run
 

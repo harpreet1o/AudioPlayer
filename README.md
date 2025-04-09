@@ -5,7 +5,7 @@ External library `audioplayer5` is used.
 ## Demo
 
 ### Live Link
-[website](https://github.com/harpreet1o/AudioPlayer.git)
+[website](https://musicplayer-13c80acff928.herokuapp.com/)
 The App is currently hosted on Heroku
 
 ### Overview
